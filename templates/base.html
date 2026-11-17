@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#103B29">
+    <meta name="description" content="CropWise — a machine-learning based crop recommendation project.">
+
+    <!-- <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/cropwise-icon.png') }}"> -->
+
+    <title>{% block title %}CropWise | Grow smarter. Choose better.{% endblock %}</title>
+    <link rel="shortcut icon" href="{{ url_for('static', filename='images/cropwise-icon.png') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block head_extra %}{% endblock %}
+
+
+</head>
+
+<body>
+    <div class="app-shell">
+        <button class="mobile-overlay" id="mobileOverlay" type="button" aria-label="Close navigation"></button>
+
+        <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+            <a class="brand" href="{{ url_for('home') }}" aria-label="CropWise dashboard">
+                <span class="brand-mark" aria-hidden="true">
+                    <svg viewBox="0 0 42 42">
+                        <path d="M33.8 7.5C21.7 7.8 11.7 12 10 22.1c-.7 4.3 2.2 8 6.2 8.5 10.2 1.3 17.3-9.7 17.6-23.1Z"
+                            fill="currentColor" />
+                        <path d="M8.2 34.2C14.5 24.4 21.4 18.3 31.4 12" fill="none" stroke="#F3F7EF" stroke-width="2.2"
+                            stroke-linecap="round" />
+                        <path d="M18.3 23.6c-3.2-1.4-5.8-1.4-8.4-.8M24.7 17.4c.1-2.5 1.2-4.7 2.9-6.5" fill="none"
+                            stroke="#F3F7EF" stroke-width="1.7" stroke-linecap="round" />
+                    </svg>
+                </span>
+                <span class="brand-text">CropWise<span>.</span><small>GROW SMARTER</small></span>
+            </a>
+
+            <div class="sidebar-label">WORKSPACE</div>
+            <nav class="sidebar-nav">
+                <a class="nav-link {% if active_page == 'dashboard' %}active{% endif %}" href="{{ url_for('home') }}">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <rect x="3.5" y="3.5" width="7" height="7" rx="1.5" />
+                        <rect x="13.5" y="3.5" width="7" height="4.5" rx="1.5" />
+                        <rect x="13.5" y="10" width="7" height="10.5" rx="1.5" />
+                        <rect x="3.5" y="13" width="7" height="7.5" rx="1.5" />
+                    </svg>
+                    <span>Dashboard</span>
+                </a>
+                <a class="nav-link {% if active_page == 'recommend' %}active{% endif %}"
+                    href="{{ url_for('recommend') }}">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                            d="M12 20.5v-9.2M12 14.8c-5.4 0-8.2-2.7-8.2-7.8 5.2 0 8.2 2.4 8.2 7.8ZM12 11.8c0-4.9 2.9-7.4 8.2-7.4 0 5-2.7 7.4-8.2 7.4Z" />
+                    </svg>
+                    <span>Crop recommendation</span>
+                </a>
+                <a class="nav-link {% if active_page == 'model' %}active{% endif %}" href="{{ url_for('model_info') }}">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M4 20h16M6.5 16V10m5.5 6V5m5.5 11V8" />
+                        <path d="M5 5.5h3M10.5 3h3M16 5h3" />
+                    </svg>
+                    <span>Model &amp; dataset</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-label sidebar-label-spaced">MORE</div>
+            <nav class="sidebar-nav">
+                <a class="nav-link {% if active_page == 'about' %}active{% endif %}" href="{{ url_for('about') }}">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="12" cy="12" r="9" />
+                        <path d="M12 11v5m0-8h.01" />
+                    </svg>
+                    <span>About CropWise</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-bottom">
+                <div class="sidebar-callout">
+                    <span class="callout-symbol" aria-hidden="true">✳</span>
+                    <p class="callout-kicker">GROW WITH INSIGHT</p>
+                    <p class="callout-title">Better choices begin with better understanding.</p>
+                    <span class="callout-decoration" aria-hidden="true"></span>
+                </div>
+                <div class="sidebar-status">
+                    <span class="status-dot"></span>
+                    <span>LOCAL PROJECT</span>
+                    <span class="sidebar-version">v1.0</span>
+                </div>
+            </div>
+        </aside>
+
+        <div class="main-column">
+            <header class="topbar">
+                <div class="topbar-start">
+                    <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation"
+                        aria-controls="sidebar" aria-expanded="false">
+                        <span></span><span></span><span></span>
+                    </button>
+                    <div class="page-breadcrumb">
+                        <span>CROPWISE</span><b>/</b><strong>{% block breadcrumb %}OVERVIEW{% endblock %}</strong>
+                    </div>
+                </div>
+                <div class="topbar-end">
+                    <div class="model-status {% if not model_file_available %}status-warning{% endif %}">
+                        <span class="status-dot"></span>
+                        {{ 'MODEL FILE FOUND' if model_file_available else 'MODEL FILE NOT FOUND' }}
+                    </div>
+                    <div class="topbar-mark" aria-label="CropWise">CW</div>
+                </div>
+            </header>
+
+            <main class="page-content">
+                {% block content %}{% endblock %}
+            </main>
+
+            <footer class="page-footer">
+                <span>© <span id="currentYear">2026</span> CropWise</span>
+                <span>Grow smarter. Choose better.</span>
+            </footer>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>

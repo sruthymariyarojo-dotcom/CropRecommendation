@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block title %}{{ page_title }} | CropWise{% endblock %}
+{% block breadcrumb %}{{ page_title|upper }}{% endblock %}
+{% block content %}
+<section class="placeholder-page reveal">
+    <span class="placeholder-flower" aria-hidden="true">✳</span>
+    <span class="section-kicker">CROPWISE WORKSPACE</span>
+    <h1>{{ page_title }}</h1>
+    <p>{{ page_description }}</p>
+    <span class="placeholder-status"><i></i> PAGE UNDER DEVELOPMENT</span>
+    <a class="outline-button" href="{{ url_for('home') }}">← Return to dashboard</a>
+</section>
+{% endblock %}

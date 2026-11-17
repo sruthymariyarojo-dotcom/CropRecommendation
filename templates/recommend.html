@@ -1,0 +1,962 @@
+{% extends 'base.html' %}
+
+{% block title %}Crop Recommendation | CropWise{% endblock %}
+
+{% block breadcrumb %}CROP RECOMMENDATION{% endblock %}
+
+
+{% block head_extra %}
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/recommend.css') }}">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/recommend-results.css') }}">
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="recommend-page">
+
+
+    <!-- ====================================================
+         1. PAGE INTRODUCTION
+    ===================================================== -->
+
+    <section class="rec-hero reveal">
+
+        <div class="rec-hero-copy">
+
+            <p class="rec-eyebrow">
+                <span></span>
+                INTELLIGENT CROP PREDICTION
+            </p>
+
+            <h1>
+                Find a crop idea
+                <br>
+                through <em>the data.</em>
+            </h1>
+
+            <p class="rec-hero-text">
+                Share seven soil and environmental measurements.
+                CropWise will analyse the values using its trained
+                machine-learning model.
+            </p>
+
+            <div class="rec-hero-meta">
+
+                <span>
+                    <i></i>
+                    7 input parameters
+                </span>
+
+                <span>
+                    <i></i>
+                    22 crop categories
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="rec-hero-visual">
+
+            <img src="{{ url_for('static', filename='images/farm-hero.svg') }}" alt="Stylized green cultivated fields">
+
+            <div class="rec-hero-note">
+
+                <span class="rec-hero-note-icon">
+                    ✳
+                </span>
+
+                <span>
+                    <strong>Rooted in data</strong>
+                    <small>Predictions from learned patterns</small>
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ====================================================
+         2. INPUT FORM AND EXAMPLE PANEL
+    ===================================================== -->
+
+    <div class="rec-content-grid">
+
+
+        <!-- INPUT FORM -->
+
+        <section class="rec-form-card reveal">
+
+            <div class="rec-card-heading">
+
+                <div>
+
+                    <p class="rec-section-kicker">
+                        AGRICULTURAL INPUTS
+                    </p>
+
+                    <h2>Enter your field conditions</h2>
+
+                    <p>
+                        Complete all seven fields to generate a prediction.
+                    </p>
+
+                </div>
+
+                <span class="rec-fields-count">
+                    07
+                    <small>FIELDS</small>
+                </span>
+
+            </div>
+
+
+
+            <form id="recommendForm" action="{{ url_for('predict') }}" method="POST" novalidate>
+
+
+                <!-- SOIL NUTRIENTS -->
+
+                <div class="rec-form-section-heading">
+
+                    <span class="rec-section-number">
+                        01
+                    </span>
+
+                    <div>
+
+                        <h3>Soil nutrient values</h3>
+
+                        <p>
+                            Enter the nutrient values represented
+                            in your soil test.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="rec-fields-grid rec-fields-three">
+
+
+                    <!-- NITROGEN -->
+
+                    <div class="rec-field">
+
+                        <label for="N">
+                            Nitrogen <span>(N)</span>
+                        </label>
+
+                        <div class="rec-input-wrap
+                            {% if errors.get('N') %}has-error{% endif %}">
+
+                            <input id="N" name="N" type="number" inputmode="decimal" step="any" min="0"
+                                placeholder="e.g. 13" value="{{ input_values.get('N', '') }}" required
+                                aria-describedby="N-help N-error">
+
+                            <span class="rec-input-unit">N</span>
+
+                        </div>
+
+                        <small class="rec-field-help" id="N-help">
+                            Dataset range: 0–140
+                        </small>
+
+                        {% if errors.get('N') %}
+
+                        <small class="rec-field-error" id="N-error">
+                            {{ errors.get('N') }}
+                        </small>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- PHOSPHORUS -->
+
+                    <div class="rec-field">
+
+                        <label for="P">
+                            Phosphorus <span>(P)</span>
+                        </label>
+
+                        <div class="rec-input-wrap
+                            {% if errors.get('P') %}has-error{% endif %}">
+
+                            <input id="P" name="P" type="number" inputmode="decimal" step="any" min="0"
+                                placeholder="e.g. 23" value="{{ input_values.get('P', '') }}" required
+                                aria-describedby="P-help P-error">
+
+                            <span class="rec-input-unit">P</span>
+
+                        </div>
+
+                        <small class="rec-field-help" id="P-help">
+                            Dataset range: 5–145
+                        </small>
+
+                        {% if errors.get('P') %}
+
+                        <small class="rec-field-error" id="P-error">
+                            {{ errors.get('P') }}
+                        </small>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- POTASSIUM -->
+
+                    <div class="rec-field">
+
+                        <label for="K">
+                            Potassium <span>(K)</span>
+                        </label>
+
+                        <div class="rec-input-wrap
+                            {% if errors.get('K') %}has-error{% endif %}">
+
+                            <input id="K" name="K" type="number" inputmode="decimal" step="any" min="0"
+                                placeholder="e.g. 6" value="{{ input_values.get('K', '') }}" required
+                                aria-describedby="K-help K-error">
+
+                            <span class="rec-input-unit">K</span>
+
+                        </div>
+
+                        <small class="rec-field-help" id="K-help">
+                            Dataset range: 5–205
+                        </small>
+
+                        {% if errors.get('K') %}
+
+                        <small class="rec-field-error" id="K-error">
+                            {{ errors.get('K') }}
+                        </small>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="rec-form-divider"></div>
+
+
+
+                <!-- ENVIRONMENTAL CONDITIONS -->
+
+                <div class="rec-form-section-heading">
+
+                    <span class="rec-section-number">
+                        02
+                    </span>
+
+                    <div>
+
+                        <h3>Environmental conditions</h3>
+
+                        <p>
+                            Enter the environmental measurements for the field.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="rec-fields-grid rec-fields-two">
+
+
+                    <!-- TEMPERATURE -->
+
+                    <div class="rec-field">
+
+                        <label for="temperature">
+                            Temperature
+                        </label>
+
+                        <div class="rec-input-wrap
+                            {% if errors.get('temperature') %}has-error{% endif %}">
+
+                            <input id="temperature" name="temperature" type="number" inputmode="decimal" step="any"
+                                placeholder="e.g. 23.96" value="{{ input_values.get('temperature', '') }}" required
+                                aria-describedby="temperature-help temperature-error">
+
+                            <span class="rec-input-unit">°C</span>
+
+                        </div>
+
+                        <small class="rec-field-help" id="temperature-help">
+                            Dataset range: 8.83–43.68 °C
+                        </small>
+
+                        {% if errors.get('temperature') %}
+
+                        <small class="rec-field-error" id="temperature-error">
+                            {{ errors.get('temperature') }}
+                        </small>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- HUMIDITY -->
+
+                    <div class="rec-field">
+
+                        <label for="humidity">
+                            Humidity
+                        </label>
+
+                        <div class="rec-input-wrap
+                            {% if errors.get('humidity') %}has-error{% endif %}">
+
+                            <input id="humidity" name="humidity" type="number" inputmode="decimal" step="any" min="0"
+                                max="100" placeholder="e.g. 90.26" value="{{ input_values.get('humidity', '') }}"
+                                required aria-describedby="humidity-help humidity-error">
+
+                            <span class="rec-input-unit">%</span>
+
+                        </div>
+
+                        <small class="rec-field-help" id="humidity-help">
+                            Relative humidity: 0–100%
+                        </small>
+
+                        {% if errors.get('humidity') %}
+
+                        <small class="rec-field-error" id="humidity-error">
+                            {{ errors.get('humidity') }}
+                        </small>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- SOIL PH -->
+
+                    <div class="rec-field">
+
+                        <label for="ph">
+                            Soil pH
+                        </label>
+
+                        <div class="rec-input-wrap
+                            {% if errors.get('ph') %}has-error{% endif %}">
+
+                            <input id="ph" name="ph" type="number" inputmode="decimal" step="any" min="0" max="14"
+                                placeholder="e.g. 7.36" value="{{ input_values.get('ph', '') }}" required
+                                aria-describedby="ph-help ph-error">
+
+                            <span class="rec-input-unit">pH</span>
+
+                        </div>
+
+                        <small class="rec-field-help" id="ph-help">
+                            Valid pH scale: 0–14
+                        </small>
+
+                        {% if errors.get('ph') %}
+
+                        <small class="rec-field-error" id="ph-error">
+                            {{ errors.get('ph') }}
+                        </small>
+
+                        {% endif %}
+
+                    </div>
+
+
+
+                    <!-- RAINFALL -->
+
+                    <div class="rec-field">
+
+                        <label for="rainfall">
+                            Rainfall
+                        </label>
+
+                        <div class="rec-input-wrap
+                            {% if errors.get('rainfall') %}has-error{% endif %}">
+
+                            <input id="rainfall" name="rainfall" type="number" inputmode="decimal" step="any" min="0"
+                                placeholder="e.g. 102.70" value="{{ input_values.get('rainfall', '') }}" required
+                                aria-describedby="rainfall-help rainfall-error">
+
+                            <span class="rec-input-unit">R</span>
+
+                        </div>
+
+                        <small class="rec-field-help" id="rainfall-help">
+                            Use the dataset's rainfall measurement scale.
+                        </small>
+
+                        {% if errors.get('rainfall') %}
+
+                        <small class="rec-field-error" id="rainfall-error">
+                            {{ errors.get('rainfall') }}
+                        </small>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- DATA RANGE INFORMATION -->
+
+                <div class="rec-form-note">
+
+                    <span>i</span>
+
+                    <p>
+                        Dataset ranges show the minimum and maximum values
+                        observed during training. Values outside those ranges
+                        can still be submitted, but predictions may be less reliable.
+                    </p>
+
+                </div>
+
+
+
+                <!-- FORM ACTIONS -->
+
+                <div class="rec-form-actions">
+
+                    <button class="rec-reset-button" type="reset">
+                        <span>↺</span>
+                        Reset values
+                    </button>
+
+
+                    <button class="rec-submit-button" id="predictButton" type="submit">
+
+                        <span class="rec-button-label">
+                            Recommend crop
+                        </span>
+
+                        <span class="rec-button-arrow">
+                            →
+                        </span>
+
+                        <span class="rec-button-spinner" aria-hidden="true"></span>
+
+                    </button>
+
+                </div>
+
+
+                <p class="rec-form-status" id="formStatus" role="status" aria-live="polite"></p>
+
+            </form>
+
+        </section>
+
+
+
+        <!-- =================================================
+             EXAMPLE DATA AND HELP PANEL
+        ================================================== -->
+
+        <aside class="rec-side-column">
+
+
+            <!-- EXAMPLE DATA -->
+
+            <section class="rec-example-card reveal">
+
+                <div class="rec-example-heading">
+
+                    <span class="rec-example-icon">
+                        ✳
+                    </span>
+
+                    <span class="rec-example-label">
+                        QUICK START
+                    </span>
+
+                </div>
+
+
+                <h2>Not sure what to enter?</h2>
+
+                <p>
+                    Load this verified example from the model
+                    evaluation output to see how the form works.
+                </p>
+
+
+                <div class="rec-example-values">
+
+                    <div>
+                        <span>Nitrogen</span>
+                        <strong>13</strong>
+                    </div>
+
+                    <div>
+                        <span>Phosphorus</span>
+                        <strong>23</strong>
+                    </div>
+
+                    <div>
+                        <span>Potassium</span>
+                        <strong>6</strong>
+                    </div>
+
+                    <div>
+                        <span>Temperature</span>
+                        <strong>23.961476 °C</strong>
+                    </div>
+
+                    <div>
+                        <span>Humidity</span>
+                        <strong>90.26408%</strong>
+                    </div>
+
+                    <div>
+                        <span>Soil pH</span>
+                        <strong>7.365338</strong>
+                    </div>
+
+                    <div>
+                        <span>Rainfall</span>
+                        <strong>102.69587</strong>
+                    </div>
+
+                </div>
+
+
+
+                <div class="rec-example-outcome">
+
+                    <span>Verified model output</span>
+
+                    <strong>Orange</strong>
+
+                </div>
+
+
+                <button class="rec-example-button" id="loadExampleButton" type="button">
+                    Load example values
+                    <span>↗</span>
+                </button>
+
+
+                <p class="rec-example-caption">
+                    This sample was correctly classified as orange
+                    in the reported test run. It is an example,
+                    not a recommendation for every field.
+                </p>
+
+            </section>
+
+
+
+            <!-- HELPFUL INFORMATION -->
+
+            <section class="rec-help-card reveal">
+
+                <div class="rec-help-icon">
+
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M12 20v-9m0 4c-5 0-8-2.8-8-8
+                                 5 0 8 2.5 8 8Zm0-3c0-5
+                                 3-8 8-8 0 5-3 8-8 8Z" />
+                    </svg>
+
+                </div>
+
+
+                <h3>Where can I find these values?</h3>
+
+                <p>
+                    Soil nutrient and pH values are commonly available
+                    from a soil test. Temperature, humidity and rainfall
+                    values should use the same measurement conventions
+                    as the dataset.
+                </p>
+
+
+                <div class="rec-help-divider"></div>
+
+
+                <strong>Remember</strong>
+
+                <p>
+                    CropWise predicts crop categories from seven
+                    dataset features. It does not calculate yield,
+                    fertilizer needs or guaranteed growing suitability.
+                </p>
+
+            </section>
+
+
+        </aside>
+
+    </div>
+
+
+
+    <!-- ====================================================
+         3. PREDICTION RESULT
+         IMPORTANT: THIS SECTION IS BELOW THE ENTIRE FORM.
+    ===================================================== -->
+
+    {% if prediction %}
+
+    <section class="rec-result reveal" aria-live="polite">
+
+
+        <!-- RESULT HEADER -->
+
+        <div class="rec-result-top">
+
+            <span class="rec-result-status">
+                <i></i>
+                PREDICTION GENERATED
+            </span>
+
+            <span class="rec-result-label">
+                MODEL OUTPUT
+            </span>
+
+        </div>
+
+
+
+        <!-- PRIMARY PREDICTION -->
+
+        <div class="rec-result-main">
+
+            <div class="rec-result-symbol" aria-hidden="true">
+
+                <svg viewBox="0 0 48 48">
+
+                    <path d="M24 41V21M24 29C13 29 8 23 8 12
+                           c11 0 16 6 16 17ZM24 23
+                           C24 12 30 7 41 7c0 11-6 16-17 16Z" fill="none" stroke="currentColor" stroke-width="2.4"
+                        stroke-linecap="round" stroke-linejoin="round" />
+
+                </svg>
+
+            </div>
+
+
+            <div class="rec-result-copy">
+
+                <p>Primary predicted crop</p>
+
+                <h2>{{ prediction|title }}</h2>
+
+                <span>
+                    The class selected by the trained classifier.
+                </span>
+
+            </div>
+
+
+            <a class="rec-result-again" href="{{ url_for('recommend') }}">
+                New prediction
+                <span>↗</span>
+            </a>
+
+        </div>
+
+
+
+        <!-- ADDITIONAL CROP CLASSES -->
+
+        {% if prediction_options and prediction_options|length > 1 %}
+
+        <div class="rec-alternatives">
+
+
+            <div class="rec-alternatives-heading">
+
+                <div>
+
+                    <p class="rec-section-kicker">
+                        ADDITIONAL MODEL OUTPUTS
+                    </p>
+
+                    <h3>Other highly ranked crop classes</h3>
+
+                </div>
+
+                <span class="rec-alternatives-count">
+                    TOP 3
+                </span>
+
+            </div>
+
+
+            <p class="rec-alternatives-intro">
+
+                These are the next highest class estimates
+                for the same input values. They are alternatives
+                in the model's ranking, not separate guarantees
+                of crop suitability.
+
+            </p>
+
+
+
+            <div class="rec-alternatives-list">
+
+                {% for item in prediction_options %}
+
+                <div class="rec-alternative-row
+                    {% if loop.first %}is-primary{% endif %}">
+
+
+                    <div class="rec-alternative-rank">
+                        {{ loop.index }}
+                    </div>
+
+
+                    <div class="rec-alternative-info">
+
+                        <div class="rec-alternative-name-line">
+
+                            <strong>
+                                {{ item.crop|title }}
+                            </strong>
+
+                            {% if loop.first %}
+
+                            <span class="rec-primary-tag">
+                                PRIMARY
+                            </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        {% if has_probability_scores
+                        and item.probability_pct is not none %}
+
+                        <div class="rec-alternative-track">
+
+                            <span class="rec-alternative-fill" data-probability="{{ item.probability_pct }}">
+                            </span>
+
+                        </div>
+
+                        {% endif %}
+
+                    </div>
+
+
+                    {% if has_probability_scores
+                    and item.probability_pct is not none %}
+
+                    <strong class="rec-alternative-score">
+
+                        {{ '%.2f'|format(item.probability_pct) }}%
+
+                    </strong>
+
+                    {% else %}
+
+                    <span class="rec-alternative-score-unavailable">
+                        Ranked class
+                    </span>
+
+                    {% endif %}
+
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+
+
+            <!-- PROBABILITY EXPLANATION -->
+
+            {% if has_probability_scores %}
+
+            <p class="rec-probability-note">
+
+                Percentages are the Gaussian Naive Bayes model's
+                class-probability estimates for these inputs.
+                They are not calibrated probabilities of real-world
+                crop success, yield or suitability.
+
+            </p>
+
+            {% else %}
+
+            <p class="rec-probability-note">
+
+                The model returned a primary class prediction.
+                Probability estimates were not available
+                for this model artifact.
+
+            </p>
+
+            {% endif %}
+
+
+        </div>
+
+        {% endif %}
+
+
+
+        <!-- DATASET RANGE WARNINGS -->
+
+        {% if range_warnings %}
+
+        <div class="rec-range-warning">
+
+            <strong>Input range notice</strong>
+
+            <ul>
+
+                {% for warning in range_warnings %}
+
+                <li>{{ warning }}</li>
+
+                {% endfor %}
+
+            </ul>
+
+            <p>
+                Values outside the ranges observed in the training
+                dataset may make the model's output less reliable.
+            </p>
+
+        </div>
+
+        {% else %}
+
+        <p class="rec-result-footnote">
+
+            The result is based on the submitted dataset features.
+            It is not a guarantee of real-world crop suitability.
+
+        </p>
+
+        {% endif %}
+
+
+
+        <!-- SUBMITTED INPUT SUMMARY -->
+
+        <div class="rec-submitted-values">
+
+            <div>
+                <span>Nitrogen</span>
+                <strong>{{ input_values.get('N', '') }}</strong>
+            </div>
+
+            <div>
+                <span>Phosphorus</span>
+                <strong>{{ input_values.get('P', '') }}</strong>
+            </div>
+
+            <div>
+                <span>Potassium</span>
+                <strong>{{ input_values.get('K', '') }}</strong>
+            </div>
+
+            <div>
+                <span>Temperature</span>
+                <strong>{{ input_values.get('temperature', '') }} °C</strong>
+            </div>
+
+            <div>
+                <span>Humidity</span>
+                <strong>{{ input_values.get('humidity', '') }}%</strong>
+            </div>
+
+            <div>
+                <span>Soil pH</span>
+                <strong>{{ input_values.get('ph', '') }}</strong>
+            </div>
+
+            <div>
+                <span>Rainfall</span>
+                <strong>{{ input_values.get('rainfall', '') }}</strong>
+            </div>
+
+        </div>
+
+
+    </section>
+
+    {% endif %}
+
+
+
+    <!-- ====================================================
+         4. PREDICTION ERROR
+         ALSO DISPLAYED BELOW THE FORM
+    ===================================================== -->
+
+    {% if global_error %}
+
+    <div class="rec-alert rec-alert-error reveal" role="alert">
+
+        <span class="rec-alert-icon">
+            !
+        </span>
+
+        <div>
+
+            <strong>
+                Prediction could not be completed
+            </strong>
+
+            <p>
+                {{ global_error }}
+            </p>
+
+        </div>
+
+    </div>
+
+    {% endif %}
+
+
+</div>
+
+{% endblock %}
+
+
+
+<!-- ========================================================
+     5. PAGE JAVASCRIPT
+========================================================= -->
+
+{% block scripts %}
+
+<script src="{{ url_for('static', filename='js/recommend.js') }}" defer>
+</script>
+
+{% endblock %}

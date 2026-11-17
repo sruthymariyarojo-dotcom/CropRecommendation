@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard | CropWise{% endblock %}
+{% block breadcrumb %}DASHBOARD{% endblock %}
+{% block content %}
+<section class="hero-section reveal">
+    <div class="hero-copy">
+        <div class="hero-eyebrow"><span></span> INTELLIGENCE FOR BETTER GROWING</div>
+        <h1>Grow smarter.<br><em>Choose better.</em></h1>
+        <p>Explore crop possibilities through soil nutrients and environmental conditions, with insights from machine learning.</p>
+        <a class="hero-button" href="{{ url_for('recommend') }}">
+            <span>Explore crop recommendation</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>
+        </a>
+        <div class="hero-caption"><span class="caption-check">✓</span> 22 crop categories <i>·</i> 7 input parameters</div>
+    </div>
+    <div class="hero-visual">
+        <img src="{{ url_for('static', filename='images/farm-hero.svg') }}" alt="Stylized green cultivated fields and growing plants">
+        <div class="hero-image-note"><span class="note-leaf">✳</span><span><strong>Rooted in data</strong><small>Insights from seven parameters</small></span></div>
+    </div>
+    <div class="hero-grain" aria-hidden="true"></div>
+</section>
+
+<section class="statistics-grid reveal" aria-label="Project overview statistics">
+    <article class="stat-card">
+        <div class="stat-card-top"><span class="stat-icon icon-dark-green"><svg viewBox="0 0 24 24" aria-hidden="true"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/></svg></span><span class="stat-overline">DATASET</span></div>
+        <strong class="stat-number" data-count="2200">2,200</strong>
+        <span class="stat-title">Dataset records</span>
+        <span class="stat-description">Agricultural samples</span>
+    </article>
+    <article class="stat-card">
+        <div class="stat-card-top"><span class="stat-icon icon-fresh"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20v-9m0 4c-5 0-8-2.8-8-8 5 0 8 2.5 8 8Zm0-3c0-5 3-8 8-8 0 5-3 8-8 8Z"/></svg></span><span class="stat-overline">OUTPUT</span></div>
+        <strong class="stat-number" data-count="22">22</strong>
+        <span class="stat-title">Crop categories</span>
+        <span class="stat-description">Prediction classes</span>
+    </article>
+    <article class="stat-card">
+        <div class="stat-card-top"><span class="stat-icon icon-olive"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5h16M6.5 16V9m5.5 7V4m5.5 12v-5"/></svg></span><span class="stat-overline">INPUT</span></div>
+        <strong class="stat-number" data-count="7">7</strong>
+        <span class="stat-title">Input parameters</span>
+        <span class="stat-description">Soil &amp; climate features</span>
+    </article>
+    <article class="stat-card stat-card-accent">
+        <div class="stat-card-top"><span class="stat-icon icon-accent"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5h16M6.5 16V10m5.5 6V5m5.5 11v-8"/></svg></span><span class="stat-overline">MODEL STUDY</span></div>
+        <strong class="stat-number" data-count="4">4</strong>
+        <span class="stat-title">Algorithms compared</span>
+        <span class="stat-description">Classification approaches</span>
+    </article>
+</section>
+
+<section class="lower-grid reveal">
+    <article class="content-panel process-panel">
+        <div class="panel-heading">
+            <div><span class="section-kicker">THE PROCESS</span><h2>From soil data to crop insight</h2><p>Three simple steps to explore a crop prediction.</p></div>
+            <span class="panel-index">01 / 03</span>
+        </div>
+        <div class="process-list">
+            <div class="process-item"><div class="process-icon process-icon-one">⌘</div><div class="process-text"><h3>Enter the conditions</h3><p>Provide the soil nutrient and environmental measurements.</p></div><span class="process-number">01</span></div>
+            <div class="process-connector"></div>
+            <div class="process-item"><div class="process-icon process-icon-two">⌁</div><div class="process-text"><h3>Machine learning analysis</h3><p>The trained classifier analyses the seven input features.</p></div><span class="process-number">02</span></div>
+            <div class="process-connector"></div>
+            <div class="process-item"><div class="process-icon process-icon-three">✳</div><div class="process-text"><h3>View the prediction</h3><p>See the predicted crop category and review your inputs.</p></div><span class="process-number">03</span></div>
+        </div>
+        <a class="panel-link" href="{{ url_for('recommend') }}">Start a recommendation <span>↗</span></a>
+    </article>
+
+    <article class="model-panel">
+        <div class="model-panel-heading"><span class="section-kicker">SELECTED CLASSIFIER</span><span class="trained-badge"><i></i> EVALUATED</span></div>
+        <div class="model-title-row"><div class="model-monogram">NB</div><div><h2>Gaussian Naive Bayes</h2><p>Selected classification algorithm</p></div></div>
+        <div class="model-rule"></div>
+        <div class="model-score-row"><span>Cross-validation accuracy</span><strong>99.49%</strong></div>
+        <div class="score-track"><span style="width:99.49%"></span></div>
+        <div class="model-score-row score-second"><span>Held-out test accuracy</span><strong>99.55%</strong></div>
+        <div class="score-track score-track-light"><span style="width:99.55%"></span></div>
+        <p class="model-footnote">Evaluated using five-fold stratified cross-validation and a separate 440-record test set.</p>
+        <a class="model-link" href="{{ url_for('model_info') }}">Explore model &amp; dataset <span>↗</span></a>
+    </article>
+</section>
+
+<section class="parameter-strip reveal">
+    <div class="parameter-intro"><span class="section-kicker">WHAT GOES INTO A PREDICTION</span><h2>Seven parameters. One crop category.</h2><p>The model learns from a combination of soil and environmental features.</p></div>
+    <div class="parameter-tags"><span>Nitrogen</span><span>Phosphorus</span><span>Potassium</span><span>Temperature</span><span>Humidity</span><span>Soil pH</span><span>Rainfall</span></div>
+</section>
+
+<div class="disclaimer"><span class="disclaimer-mark">i</span><p><strong>A note on recommendations</strong> CropWise predicts a crop category from the seven features available in its benchmark dataset. Actual crop suitability can also depend on location, soil type, season, irrigation and other agricultural conditions.</p></div>
+{% endblock %}

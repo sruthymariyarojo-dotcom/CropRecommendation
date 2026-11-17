@@ -1,0 +1,255 @@
+{% extends 'base.html' %}
+
+{% block title %}Model &amp; Dataset | CropWise{% endblock %}
+{% block breadcrumb %}MODEL &amp; DATASET{% endblock %}
+
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/model-dataset.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="model-page">
+
+    <!-- PAGE INTRODUCTION -->
+    <section class="md-intro reveal">
+        <div class="md-intro-copy">
+            <p class="md-eyebrow"><span></span> THE ENGINE BEHIND CROPWISE</p>
+            <h1>Data that shapes<br><em>every prediction.</em></h1>
+            <p class="md-intro-text">
+                Explore the agricultural dataset, the features used by the model,
+                and how four classification algorithms performed during evaluation.
+            </p>
+            <div class="md-intro-tags">
+                <span>Supervised learning</span>
+                <span>Multi-class classification</span>
+                <span>22 crop categories</span>
+            </div>
+        </div>
+        <div class="md-intro-art" aria-hidden="true">
+            <div class="md-art-ring ring-a"></div>
+            <div class="md-art-ring ring-b"></div>
+            <div class="md-art-grid"></div>
+            <div class="md-art-center"><span>ML</span><small>MODEL<br>INSIGHT</small></div>
+            <span class="md-art-node node-a">N</span>
+            <span class="md-art-node node-b">P</span>
+            <span class="md-art-node node-c">K</span>
+            <span class="md-art-node node-d">pH</span>
+            <span class="md-art-leaf">✳</span>
+        </div>
+    </section>
+
+    <!-- DATASET OVERVIEW -->
+    <section class="md-section reveal">
+        <div class="md-section-heading">
+            <div>
+                <p class="md-section-kicker">01 / DATASET OVERVIEW</p>
+                <h2>Know the data</h2>
+                <p class="md-section-description">The selected dataset connects soil and environmental values with crop labels.</p>
+            </div>
+            <span class="md-section-note">Kaggle dataset · CSV format</span>
+        </div>
+
+        <div class="md-overview-grid">
+            <article class="md-overview-card">
+                <span class="md-overview-icon icon-data">▤</span>
+                <strong>2,200</strong>
+                <span class="md-overview-label">Total records</span>
+                <small>Observations in the dataset</small>
+            </article>
+            <article class="md-overview-card">
+                <span class="md-overview-icon icon-feature">⌗</span>
+                <strong>7</strong>
+                <span class="md-overview-label">Input features</span>
+                <small>Numerical input parameters</small>
+            </article>
+            <article class="md-overview-card">
+                <span class="md-overview-icon icon-crop">✿</span>
+                <strong>22</strong>
+                <span class="md-overview-label">Crop categories</span>
+                <small>Target classes</small>
+            </article>
+            <article class="md-overview-card md-overview-card-accent">
+                <span class="md-overview-icon icon-balance">✓</span>
+                <strong>100</strong>
+                <span class="md-overview-label">Records per crop</span>
+                <small>Balanced class distribution</small>
+            </article>
+        </div>
+
+        <div class="md-dataset-detail-grid">
+            <article class="md-card md-feature-card">
+                <div class="md-card-heading">
+                    <div>
+                        <p class="md-card-kicker">INPUT VARIABLES</p>
+                        <h3>Seven features the model considers</h3>
+                    </div>
+                    <span class="md-card-count">07 INPUTS</span>
+                </div>
+                <div class="md-feature-groups">
+                    <div class="md-feature-group">
+                        <div class="md-feature-group-title"><span class="md-group-mark">NPK</span><div><strong>Soil nutrients</strong><small>Three numerical nutrient features</small></div></div>
+                        <div class="md-feature-list">
+                            <div class="md-feature-item"><span class="md-feature-symbol">N</span><div><strong>Nitrogen</strong><small>Soil nitrogen value</small></div></div>
+                            <div class="md-feature-item"><span class="md-feature-symbol">P</span><div><strong>Phosphorus</strong><small>Soil phosphorus value</small></div></div>
+                            <div class="md-feature-item"><span class="md-feature-symbol">K</span><div><strong>Potassium</strong><small>Soil potassium value</small></div></div>
+                        </div>
+                    </div>
+                    <div class="md-feature-group">
+                        <div class="md-feature-group-title"><span class="md-group-mark climate-mark">◌</span><div><strong>Environmental conditions</strong><small>Four numerical environmental features</small></div></div>
+                        <div class="md-feature-list md-feature-list-climate">
+                            <div class="md-feature-item"><span class="md-feature-symbol">°C</span><div><strong>Temperature</strong><small>Temperature value in the dataset</small></div></div>
+                            <div class="md-feature-item"><span class="md-feature-symbol">%</span><div><strong>Humidity</strong><small>Relative humidity percentage</small></div></div>
+                            <div class="md-feature-item"><span class="md-feature-symbol">pH</span><div><strong>Soil pH</strong><small>Soil acidity or alkalinity</small></div></div>
+                            <div class="md-feature-item"><span class="md-feature-symbol">R</span><div><strong>Rainfall</strong><small>Rainfall value supplied in the dataset</small></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="md-feature-footnote"><span>i</span> Use input values in a scale consistent with the training dataset. The dataset description does not establish a common measurement period for rainfall.</div>
+            </article>
+
+            <article class="md-card md-crops-card">
+                <div class="md-card-heading">
+                    <div>
+                        <p class="md-card-kicker">TARGET VARIABLE</p>
+                        <h3>22 crop categories</h3>
+                    </div>
+                    <span class="md-card-count">LABEL</span>
+                </div>
+                <p class="md-crops-intro">The model predicts one crop category from the target labels represented in the dataset.</p>
+                <div class="md-crop-tags">
+                    {% for crop in crop_categories %}
+                    <span>{{ crop|replace('_', ' ')|title }}</span>
+                    {% endfor %}
+                </div>
+                <div class="md-balance-note"><span class="md-balance-check">✓</span><span><strong>Balanced dataset</strong><small>100 observations are available for each crop category.</small></span></div>
+            </article>
+        </div>
+    </section>
+
+    <!-- DATA QUALITY -->
+    <section class="md-quality-strip reveal">
+        <div class="md-quality-copy">
+            <p class="md-section-kicker">02 / DATA QUALITY</p>
+            <h2>Checked before training.</h2>
+            <p>The dataset was inspected for common data quality issues. No row removal or missing-value imputation was required based on the completed audit.</p>
+        </div>
+        <div class="md-quality-stats">
+            <div><strong>0</strong><span>Missing values</span></div>
+            <div><strong>0</strong><span>Duplicate rows</span></div>
+            <div><strong>0</strong><span>Invalid values found*</span></div>
+        </div>
+        <small class="md-quality-footnote">*Zero under the numerical validity checks applied in this project.</small>
+    </section>
+
+    <!-- MODEL COMPARISON -->
+    <section class="md-section reveal">
+        <div class="md-section-heading">
+            <div>
+                <p class="md-section-kicker">03 / ALGORITHM COMPARISON</p>
+                <h2>Four models. One selected classifier.</h2>
+                <p class="md-section-description">Models were compared using five-fold stratified cross-validation on the training split.</p>
+            </div>
+            <span class="md-section-note">80% training · 20% testing</span>
+        </div>
+
+        <div class="md-model-layout">
+            <article class="md-card md-comparison-card">
+                <div class="md-card-heading">
+                    <div><p class="md-card-kicker">CROSS-VALIDATION RESULTS</p><h3>Model performance</h3></div>
+                    <span class="md-card-count">MEAN ACCURACY</span>
+                </div>
+                {% if model_comparison %}
+                <div class="md-model-list">
+                    {% for item in model_comparison %}
+                    <div class="md-model-row {% if item['Model'] == selected_model %}is-selected{% endif %}">
+                        <div class="md-model-row-top">
+                            <div class="md-model-label"><span class="md-rank">0{{ loop.index }}</span><strong>{{ item['Model'] }}</strong>{% if item['Model'] == selected_model %}<span class="md-selected-tag">SELECTED</span>{% endif %}</div>
+                            <strong class="md-model-score">{{ '%.2f'|format(item['CV Accuracy'] * 100) }}%</strong>
+                        </div>
+                        <div class="md-score-track"><span style="width: {{ '%.2f'|format(item['CV Accuracy'] * 100) }}%"></span></div>
+                        <div class="md-model-row-bottom"><span>Macro F1-score</span><span>{{ '%.4f'|format(item['CV F1-Score (Macro)']) }}</span></div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="md-report-empty">Model comparison report is not available. Run <code>model_training.py</code> to generate it.</div>
+                {% endif %}
+                <div class="md-comparison-footnote">Selection was based primarily on mean macro F1-score, with accuracy used as a secondary comparison.</div>
+            </article>
+
+            <article class="md-selected-card">
+                <div class="md-selected-top"><span class="md-selected-kicker">SELECTED CLASSIFIER</span><span class="md-trained-pill"><i></i> EVALUATED</span></div>
+                <div class="md-selected-identity"><span class="md-nb-mark">NB</span><div><h3>{{ selected_model or 'Gaussian Naive Bayes' }}</h3><p>Supervised multi-class classification</p></div></div>
+                <div class="md-selected-rule"></div>
+                {% if test_metrics %}
+                <div class="md-final-metric"><span>Held-out test accuracy</span><strong>{{ '%.2f'|format(test_metrics['Accuracy'] * 100) }}%</strong></div>
+                <div class="md-final-metric"><span>Macro precision</span><strong>{{ '%.4f'|format(test_metrics['Precision (Macro)']) }}</strong></div>
+                <div class="md-final-metric"><span>Macro recall</span><strong>{{ '%.4f'|format(test_metrics['Recall (Macro)']) }}</strong></div>
+                <div class="md-final-metric"><span>Macro F1-score</span><strong>{{ '%.4f'|format(test_metrics['F1-Score (Macro)']) }}</strong></div>
+                {% else %}
+                <p class="md-report-empty md-report-empty-dark">Final test metrics are unavailable. Run model training to generate the evaluation report.</p>
+                {% endif %}
+                <div class="md-split-summary"><span><strong>1,760</strong><small>Training records</small></span><span><strong>440</strong><small>Test records</small></span></div>
+            </article>
+        </div>
+        <div class="md-method-note"><span>i</span><p>The test set was kept separate from cross-validation and used for the final evaluation. Reported results describe performance on this dataset split, not guaranteed performance on new farms.</p></div>
+    </section>
+
+    <!-- EVALUATION VISUALS -->
+    <section class="md-section reveal">
+        <div class="md-section-heading">
+            <div>
+                <p class="md-section-kicker">04 / VISUAL ANALYSIS</p>
+                <h2>Explore the dataset visually.</h2>
+                <p class="md-section-description">Selected charts generated during exploratory data analysis and final model evaluation.</p>
+            </div>
+            <span class="md-section-note">EDA &amp; evaluation</span>
+        </div>
+
+        <div class="md-visual-grid">
+            <article class="md-card md-visual-card md-visual-wide">
+                <div class="md-visual-heading"><div><h3>Crop category distribution</h3><p>Each of the 22 categories contributes 100 records.</p></div><span class="md-chart-label">DATASET</span></div>
+                {% if chart_available['crop_distribution.png'] %}
+                <img src="{{ url_for('report_image', filename='crop_distribution.png') }}" alt="Bar chart showing 100 observations for each of the 22 crop categories" loading="lazy">
+                {% else %}<div class="md-chart-missing">Chart not found. Check the reports folder.</div>{% endif %}
+            </article>
+            <article class="md-card md-visual-card">
+                <div class="md-visual-heading"><div><h3>Feature correlation</h3><p>Linear relationships between numerical inputs.</p></div><span class="md-chart-label">EDA</span></div>
+                {% if chart_available['correlation_heatmap.png'] %}
+                <img src="{{ url_for('report_image', filename='correlation_heatmap.png') }}" alt="Correlation heatmap for the seven numerical input features" loading="lazy">
+                {% else %}<div class="md-chart-missing">Chart not found. Check the reports folder.</div>{% endif %}
+            </article>
+            <article class="md-card md-visual-card">
+                <div class="md-visual-heading"><div><h3>Confusion matrix</h3><p>Actual and predicted crop categories on the test set.</p></div><span class="md-chart-label">TEST SET</span></div>
+                {% if chart_available['confusion_matrix.png'] %}
+                <img src="{{ url_for('report_image', filename='confusion_matrix.png') }}" alt="Confusion matrix for the selected crop classification model" loading="lazy">
+                {% else %}<div class="md-chart-missing">Chart not found. Run model training first.</div>{% endif %}
+            </article>
+            <article class="md-card md-visual-card">
+                <div class="md-visual-heading"><div><h3>Feature distributions</h3><p>How the numerical input values are spread.</p></div><span class="md-chart-label">EDA</span></div>
+                {% if chart_available['feature_distributions.png'] %}
+                <img src="{{ url_for('report_image', filename='feature_distributions.png') }}" alt="Histograms showing distributions of the seven input features" loading="lazy">
+                {% else %}<div class="md-chart-missing">Chart not found. Check the reports folder.</div>{% endif %}
+            </article>
+            <article class="md-card md-visual-card">
+                <div class="md-visual-heading"><div><h3>Potential outliers</h3><p>Boxplots used during feature inspection.</p></div><span class="md-chart-label">EDA</span></div>
+                {% if chart_available['feature_boxplots.png'] %}
+                <img src="{{ url_for('report_image', filename='feature_boxplots.png') }}" alt="Boxplots for the seven numerical input features" loading="lazy">
+                {% else %}<div class="md-chart-missing">Chart not found. Check the reports folder.</div>{% endif %}
+            </article>
+        </div>
+    </section>
+
+    <!-- LIMITATIONS -->
+    <section class="md-scope-note reveal">
+        <span class="md-scope-icon">i</span>
+        <div><p class="md-card-kicker">UNDERSTANDING THE SCOPE</p><h3>What this dataset does—and does not—tell us.</h3><p>The model predicts a crop category using the seven features included in the selected dataset. The dataset does not include every real-world farming factor, such as location, soil type, season, irrigation, market conditions or expected yield. CropWise is an educational decision-support prototype, not a guarantee of agricultural suitability.</p></div>
+    </section>
+
+    <section class="md-cta reveal">
+        <div><p class="md-cta-kicker">PUT THE MODEL TO WORK</p><h2>Ready to explore a crop prediction?</h2><p>Enter the seven dataset features and see what the trained model predicts.</p></div>
+        <a href="{{ url_for('recommend') }}" class="md-cta-button">Try crop recommendation <span>↗</span></a>
+    </section>
+
+</div>
+{% endblock %}

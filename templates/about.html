@@ -1,0 +1,183 @@
+{% extends 'base.html' %}
+
+{% block title %}About CropWise | Grow smarter. Choose better.{% endblock %}
+{% block breadcrumb %}ABOUT CROPWISE{% endblock %}
+
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="about-page">
+
+    <!-- INTRODUCTION -->
+    <section class="about-hero reveal">
+        <div class="about-hero-copy">
+            <p class="about-eyebrow"><span></span> ABOUT THE PROJECT</p>
+            <h1>Where agriculture meets <em>intelligent insight.</em></h1>
+            <p class="about-hero-description">
+                CropWise is a machine-learning based crop recommendation project
+                that explores how soil nutrients and environmental conditions
+                can be used to predict a crop category.
+            </p>
+            <div class="about-hero-tags">
+                <span><i></i> Academic microproject</span>
+                <span><i></i> Machine learning</span>
+            </div>
+        </div>
+
+        <div class="about-hero-visual">
+            <div class="about-visual-frame">
+                <img
+                    src="{{ url_for('static', filename='images/farm-hero.svg') }}"
+                    alt="Illustration of cultivated green fields and growing plants"
+                >
+            </div>
+            <div class="about-visual-note">
+                <span class="about-note-icon" aria-hidden="true">✳</span>
+                <span>
+                    <strong>Rooted in data</strong>
+                    <small>Designed around seven input features</small>
+                </span>
+            </div>
+            <span class="about-orbit about-orbit-one" aria-hidden="true"></span>
+            <span class="about-orbit about-orbit-two" aria-hidden="true"></span>
+        </div>
+    </section>
+
+    <!-- PROJECT PURPOSE -->
+    <section class="about-purpose-grid reveal">
+        <article class="about-purpose-card">
+            <p class="about-section-kicker">WHY CROPWISE</p>
+            <h2>A focused idea with a practical purpose.</h2>
+            <p>
+                Choosing a crop involves understanding several conditions.
+                CropWise demonstrates how a machine-learning model can learn
+                patterns from labelled agricultural data and use those patterns
+                to predict a crop category from new input values.
+            </p>
+            <p>
+                The project brings data preparation, exploratory analysis,
+                model comparison and a simple web interface together in one
+                educational application.
+            </p>
+        </article>
+
+        <aside class="about-purpose-highlight">
+            <span class="about-highlight-mark" aria-hidden="true">CW</span>
+            <p class="about-highlight-kicker">THE PROJECT IN ONE LINE</p>
+            <h3>Seven agricultural inputs.<br><em>One predicted crop category.</em></h3>
+            <div class="about-highlight-rule"></div>
+            <div class="about-highlight-facts">
+                <div><strong>2,200</strong><span>Dataset records</span></div>
+                <div><strong>22</strong><span>Crop categories</span></div>
+                <div><strong>7</strong><span>Input features</span></div>
+            </div>
+        </aside>
+    </section>
+
+    <!-- METHODOLOGY -->
+    <section class="about-process-section reveal">
+        <div class="about-section-heading">
+            <div>
+                <p class="about-section-kicker">HOW IT COMES TOGETHER</p>
+                <h2>From agricultural data to prediction.</h2>
+                <p class="about-section-description">
+                    The project follows a structured machine-learning workflow.
+                </p>
+            </div>
+            <span class="about-section-index">01 / 04</span>
+        </div>
+
+        <div class="about-process-grid">
+            <article class="about-process-card">
+                <div class="about-process-top"><span>01</span><span class="about-process-icon">▤</span></div>
+                <h3>Understand the data</h3>
+                <p>Study the dataset, its seven features and the 22 crop labels.</p>
+            </article>
+            <article class="about-process-card">
+                <div class="about-process-top"><span>02</span><span class="about-process-icon">⌕</span></div>
+                <h3>Clean and explore</h3>
+                <p>Check data quality, examine distributions and explore feature relationships.</p>
+            </article>
+            <article class="about-process-card">
+                <div class="about-process-top"><span>03</span><span class="about-process-icon">⌁</span></div>
+                <h3>Train and evaluate</h3>
+                <p>Compare classification algorithms and evaluate the selected model.</p>
+            </article>
+            <article class="about-process-card">
+                <div class="about-process-top"><span>04</span><span class="about-process-icon">✳</span></div>
+                <h3>Generate a prediction</h3>
+                <p>Use the saved model through the CropWise web application.</p>
+            </article>
+        </div>
+    </section>
+
+    <!-- INPUTS AND TECHNOLOGY -->
+    <section class="about-details-grid reveal">
+        <article class="about-detail-card about-inputs-card">
+            <p class="about-section-kicker">WHAT THE MODEL CONSIDERS</p>
+            <h2>Soil and environmental features.</h2>
+            <p class="about-detail-intro">
+                The model uses the seven numerical features available in the
+                selected dataset.
+            </p>
+
+            <div class="about-feature-group">
+                <div class="about-feature-heading"><span class="about-feature-symbol">NPK</span><strong>Soil nutrients</strong></div>
+                <div class="about-feature-chips"><span>Nitrogen</span><span>Phosphorus</span><span>Potassium</span></div>
+            </div>
+            <div class="about-feature-group">
+                <div class="about-feature-heading"><span class="about-feature-symbol climate-symbol">◌</span><strong>Environmental conditions</strong></div>
+                <div class="about-feature-chips"><span>Temperature</span><span>Humidity</span><span>Soil pH</span><span>Rainfall</span></div>
+            </div>
+        </article>
+
+        <article class="about-detail-card about-tech-card">
+            <p class="about-section-kicker">BUILT WITH</p>
+            <h2>Tools behind the project.</h2>
+            <p class="about-detail-intro">
+                A compact Python machine-learning workflow connected to a
+                browser-based interface.
+            </p>
+            <div class="about-tech-list">
+                <div><span class="about-tech-mark python-mark">Py</span><span><strong>Python</strong><small>Core programming language</small></span></div>
+                <div><span class="about-tech-mark flask-mark">Fl</span><span><strong>Flask</strong><small>Web application backend</small></span></div>
+                <div><span class="about-tech-mark sklearn-mark">ML</span><span><strong>Scikit-learn</strong><small>Machine learning algorithms</small></span></div>
+                <div><span class="about-tech-mark web-mark">&lt;/&gt;</span><span><strong>HTML, CSS &amp; JavaScript</strong><small>Frontend structure and interaction</small></span></div>
+            </div>
+        </article>
+    </section>
+
+    <!-- SCOPE AND LIMITATIONS -->
+    <section class="about-scope reveal">
+        <div class="about-scope-icon" aria-hidden="true">i</div>
+        <div class="about-scope-copy">
+            <p class="about-section-kicker">PROJECT SCOPE</p>
+            <h2>A prediction tool, not a complete farm advisory system.</h2>
+            <p>
+                CropWise predicts one of the 22 crop categories represented in
+                its dataset. The selected dataset does not include every factor
+                involved in real farming decisions, such as geographical
+                location, soil type, season, irrigation availability, market
+                conditions or expected yield. The prediction should therefore
+                be understood as an educational, data-driven output rather
+                than a guarantee of agricultural suitability.
+            </p>
+        </div>
+    </section>
+
+    <!-- CALL TO ACTION -->
+    <section class="about-cta reveal">
+        <div>
+            <p class="about-cta-kicker">READY TO EXPLORE?</p>
+            <h2>See what the data suggests.</h2>
+            <p>Enter the agricultural parameters and try a crop prediction.</p>
+        </div>
+        <a href="{{ url_for('recommend') }}" class="about-cta-button">
+            Try crop recommendation <span aria-hidden="true">↗</span>
+        </a>
+    </section>
+
+</div>
+{% endblock %}
